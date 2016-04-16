@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="SixTune">
 <head>
     <meta charset="UTF-8">
     <title>Six-String Tuner</title>
-</head>
-<body>
-    <div>
-        <h1>Tuner</h1>
-
-    </div>
-    <div>
-        <h1>Picky Guitar</h1>
-
-    </div>
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
 
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/jsfft/lib/complex_array.js"></script>
     <script src="bower_components/jsfft/lib/fft.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body ng-controller="SixTuneCtrl">
+    <div>
+        <h1>Tuner</h1>
+        <div id="tuner">
+            <div class="tunebar" ng-repeat="diff in tuneDiffs"></div>
+        </div>
+    </div>
+    <div ng-show="inTune">
+        <h1>Picky Guitar</h1>
+
+    </div>
 </body>
 </html>

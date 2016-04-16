@@ -1,0 +1,11 @@
+#tuner {
+    height: 300px;
+}
+
+.tunebar {
+    margin-right: 2px;
+    height: 300px;
+    width: 30px;
+    display: inline-block;
+    background-color: black;
+}
