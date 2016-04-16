@@ -1,0 +1,23 @@
+{
+  "name": "sixtune",
+  "homepage": "https://github.com/conradhappeliv/sixtune",
+  "authors": [
+    "Conrad H. Appel",
+    "IV <me@conradhappeliv.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.5.4",
+    "jsfft": "https://github.com/dntj/jsfft.git",
+    "d3": "^3.5.16"
+  }
+}
