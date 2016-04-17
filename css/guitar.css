@@ -12,10 +12,10 @@
 
 #guitarbodybigger {
   position: absolute;
-  left:-2050px;
-  top:-270px;
+  left:-2000px;
+  top:-290px;
   width: 700px;
-  height: 720px;
+  height: 790px;
   background-color: sienna;
   opacity: .95;
   border-radius: 50%;
@@ -34,12 +34,14 @@
 
 #guitarbodyhold {
   position: absolute;
-  left:-1420px;
-  top:-40px;
-  height: 220px;
-  width: 220px;
+  left:-1390px;
+  top:-51px;
+  height: 250px;
+  width: 250px;
   border-radius: 50%;
-  background-color: black;
+  border: 2px saddlebrown solid;
+  box-shadow: inset 0 10px 10px #000;
+  background-color: #7a3d00;
   opacity: .4;
 }
 

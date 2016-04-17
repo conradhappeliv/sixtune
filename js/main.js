@@ -5,18 +5,35 @@ pgApp.controller('SixTuneCtrl', function($scope) {
     $scope.inTune = false;
     $scope.idealFreqs = [82.407, 110, 146.83, 196, 246.94, 329.63];
     $scope.closests = [0, 0, 0, 0, 0, 0];
+    $scope.diffTimeData = [];
     $scope.closeststwo = [{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true}];
     $scope.closeststwotest = [0, 0, 0, 0, 0, 0];
     $scope.stringclasses = ['onnote', 'onnote', 'onnote', 'onnote', 'onnote', 'onnote'];
 
     setInterval(function(){
+        var curData = [];
         for(var i = 0; i < $scope.closests.length; i++) {
-            $scope.closeststwo[i].val = $scope.closests[i];
-            $scope.closeststwo[i].good = (Math.abs($scope.closests[i]) < .5);
+            curData.push({val: $scope.closests[i], good: (Math.abs($scope.closests[i]) < .3)});
+        }
+        $scope.diffTimeData.push(curData);
+        if($scope.diffTimeData.length > 10) $scope.diffTimeData.shift();
+
+
+        for(var stringNum = 0; stringNum < $scope.closeststwo.length; stringNum++) {
+            var avgVal = 0;
+            var goodNum = 0;
+            for(var i = 0; i < $scope.diffTimeData.length; i++) {
+                avgVal += $scope.diffTimeData[i][stringNum].val;
+                if($scope.diffTimeData[i][stringNum].good) goodNum++;
+            }
+            avgVal /= $scope.diffTimeData.length;
+
+            $scope.closeststwo[stringNum].val = avgVal;
+            $scope.closeststwo[stringNum].good = goodNum > Math.floor($scope.diffTimeData.length/2);
         }
         $scope.updatecolors();
         $scope.$apply();
-    }, 100);
+    }, 40);
 
     $scope.updatecolors = function () {
       for (var i = 0; i < $scope.stringclasses.length; i++) {
@@ -41,7 +58,7 @@ pgApp.controller('SixTuneCtrl', function($scope) {
 
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     var analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 16384;
+    analyser.fftSize = 16384*2;
     analyser.smoothingTimeConstant = .8;
     var bufferLength = analyser.frequencyBinCount;
     var buffer = new Uint8Array(bufferLength);
