@@ -9,3 +9,11 @@
     display: inline-block;
     background-color: black;
 }
+
+.bad {
+    color: red;
+}
+
+.good {
+    color: lawngreen;
+}

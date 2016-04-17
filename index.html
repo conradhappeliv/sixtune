@@ -13,18 +13,8 @@
 <body ng-controller="SixTuneCtrl">
     <canvas id="myCanvas" width="1000" height="400"></canvas>
     <ul>
-        <li ng-repeat="diff in closeststwo track by $index" ng-bind="closeststwo[$index]"></li>
+        <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="diff.val | number:2"></li>
     </ul>
-    <div>
-        <h1>Tuner</h1>
-        <div id="tuner">
-            <div class="tunebar" ng-repeat="diff in tuneDiffs"></div>
-        </div>
-    </div>
-    <div ng-show="inTune">
-        <h1>Picky Guitar</h1>
-
-    </div>
     <script src="js/main.js"></script>
 </body>
 </html>

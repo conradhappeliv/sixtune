@@ -11,9 +11,13 @@ pgApp.controller('SixTuneCtrl', function($scope) {
         40
     ];
     $scope.idealFreqs = [82.407, 110, 146.83, 196, 246.94, 329.63];
-    $scope.closeststwo = [0, 0, 0, 0, 0, 0];
+    $scope.closests = [0, 0, 0, 0, 0, 0];
+    $scope.closeststwo = [{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true}];
     setInterval(function(){
-        $scope.closeststwo = $scope.closests;
+        for(var i = 0; i < $scope.closests.length; i++) {
+            $scope.closeststwo[i].val = $scope.closests[i];
+            $scope.closeststwo[i].good = (Math.abs($scope.closests[i]) < .35);
+        }
         $scope.$apply();
     }, 100);
 
@@ -24,7 +28,7 @@ pgApp.controller('SixTuneCtrl', function($scope) {
 
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     var analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 16384;
+    analyser.fftSize = 16384*2;
     analyser.smoothingTimeConstant = .8;
     var bufferLength = analyser.frequencyBinCount;
     var buffer = new Uint8Array(bufferLength);
@@ -91,7 +95,6 @@ pgApp.controller('SixTuneCtrl', function($scope) {
 
             var weightedAvgFreq = 0;
             for(var i = 0; i < freqsToAdd.length; i++) weightedAvgFreq += freqsToAdd[i].val/sum * freqsToAdd[i].index;
-            console.log(peaks[peak], weightedAvgFreq)
 
             peakFreqs.push(weightedAvgFreq*44100/analyser.fftSize);
         }
@@ -113,8 +116,11 @@ pgApp.controller('SixTuneCtrl', function($scope) {
             closests.push(peaks[ind]);
             closestsFreqs.push(peakFreqs[ind] - $scope.idealFreqs[freq]);
         }
-        $scope.closests = closestsFreqs;
-        console.log(closests);
+        for(var i = 0; i < $scope.closests.length; i++) {
+            if(Math.abs(closestsFreqs[i]) > 5) continue;
+            if(!$scope.closests[i]) $scope.closests[i] = closestsFreqs[i];
+            else $scope.closests[i] = $scope.closests[i]*3/5 + closestsFreqs[i]*2/5;
+        }
 
         for(var i = 0; i < bufferLength; i++) {
             barHeight = buffer[i]*3.125;
