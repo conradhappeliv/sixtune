@@ -13,8 +13,21 @@ pgApp.controller('SixTuneCtrl', function($scope) {
             $scope.closeststwo[i].val = $scope.closests[i];
             $scope.closeststwo[i].good = (Math.abs($scope.closests[i]) < .35);
         }
+        $scope.updatecolors();
         $scope.$apply();
     }, 100);
+
+    $scope.updatecolors = function () {
+      for (var i = 0; i < $scope.stringclasses.length; i++) {
+        if (closeststwo.good) {
+          $scope.stringclasses[i] = 'onnote';
+        } else if (closeststwo.val < 0) {
+          $scope.stringclasses[i] = 'undernote';
+        } else {
+          $scope.stringclasses[i] = 'overnote';
+        }
+      }
+    }
 
     $scope.testcolors = function() {
       for (var i = 0; i < $scope.stringclasses.length; i++) {
