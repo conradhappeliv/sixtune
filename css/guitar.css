@@ -142,5 +142,5 @@
 .overnote-add, .overnote-remove,
 .undernote-add, .undernote-remove,
 .onnote-add, .onnote-remove {
-  transition: background-color 1000ms linear;
+  transition: background-color 500ms linear;
 }

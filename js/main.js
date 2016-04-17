@@ -11,7 +11,7 @@ pgApp.controller('SixTuneCtrl', function($scope) {
     setInterval(function(){
         for(var i = 0; i < $scope.closests.length; i++) {
             $scope.closeststwo[i].val = $scope.closests[i];
-            $scope.closeststwo[i].good = (Math.abs($scope.closests[i]) < .35);
+            $scope.closeststwo[i].good = (Math.abs($scope.closests[i]) < .5);
         }
         $scope.updatecolors();
         $scope.$apply();
@@ -19,15 +19,15 @@ pgApp.controller('SixTuneCtrl', function($scope) {
 
     $scope.updatecolors = function () {
       for (var i = 0; i < $scope.stringclasses.length; i++) {
-        if (closeststwo.good) {
+        if ($scope.closeststwo[i].good) {
           $scope.stringclasses[i] = 'onnote';
-        } else if (closeststwo.val < 0) {
+        } else if ($scope.closeststwo[i].val < 0) {
           $scope.stringclasses[i] = 'undernote';
         } else {
           $scope.stringclasses[i] = 'overnote';
         }
       }
-    }
+    };
 
     $scope.testcolors = function() {
       for (var i = 0; i < $scope.stringclasses.length; i++) {
