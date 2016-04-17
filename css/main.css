@@ -10,6 +10,14 @@
     background-color: black;
 }
 
+.bad {
+    color: red;
+}
+
+.good {
+    color: lawngreen;
+}
+
 body {
   margin: 0 auto;
   height:100%
