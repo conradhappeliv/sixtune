@@ -1,3 +1,9 @@
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 #tuner {
     height: 300px;
 }
@@ -40,4 +46,21 @@ body {
   border-radius: 10px;
   width: 200px;
   color: black;
+}
+
+.fade.ng-hide {
+  opacity: 0;
+}
+
+.fade.ng-hide-remove,
+.fade.ng-hide-add {
+  display: block !important;
+}
+
+.fade.ng-hide-remove {
+  transition: all linear 600ms;
+}
+
+.fade.ng-hide-add {
+  transition: all linear 600ms;
 }

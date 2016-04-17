@@ -40,8 +40,8 @@
       </div>
 
     </div>
-    <canvas ng-show="showData == true" id="myCanvas" width="1000" height="400"></canvas>
-    <div id="dataList" ng-show="showData == true">
+    <canvas class="fade" ng-show="showData == true" id="myCanvas" width="1000" height="400"></canvas>
+    <div class="fade" id="dataList" ng-show="showData == true">
       <ul>
         <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="diff.val | number:2"></li>
       </ul>
