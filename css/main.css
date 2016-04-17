@@ -26,7 +26,12 @@ html, body {
 
 body {
   margin: 0 auto;
-  height:100%
+  height:100%;
+  overflow: hidden;
+}
+
+li {
+    list-style-type: none;
 }
 
 #myCanvas {

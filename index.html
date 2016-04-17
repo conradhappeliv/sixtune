@@ -16,7 +16,7 @@
 </head>
 <body ng-controller="SixTuneCtrl">
     <div id="title">
-      <div id="titletext" ng-click="testcolors()">six tune</div>
+      <div id="titletext" ng-click="testcolors()"><a href="#">six tune</a></div>
     </div>
 
     <div id="guitar">
@@ -43,7 +43,7 @@
     <canvas class="fade" ng-show="showData == true" id="myCanvas" width="1000" height="400"></canvas>
     <div class="fade" id="dataList" ng-show="showData == true">
       <ul>
-        <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="diff.val | number:2"></li>
+        <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="(diff.val | number:2) || '--'"></li>
       </ul>
     </div>
     <script src="js/main.js"></script>

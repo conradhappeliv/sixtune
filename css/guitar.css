@@ -46,6 +46,11 @@
   margin-bottom: -5px;
 }
 
+#title a {
+  color: ghostwhite;
+  text-decoration: none;
+}
+
 #guitar {
   transform: rotate(-4deg);
   background-color: RoyalBlue;
