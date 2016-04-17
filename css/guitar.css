@@ -4,6 +4,12 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: Raleway;
+    src: url(Raleway-Light.ttf);
+    font-weight: light;
+}
+
 #guitarbody {
   position: absolute;
   left:-1550px;
@@ -68,6 +74,15 @@
   width: 10px;
   height:140px;
   background-color: black;
+}
+
+#results {
+  color:white;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 2em;
+  font-family: Raleway;
+  opacity: .8;
 }
 
 #head {
