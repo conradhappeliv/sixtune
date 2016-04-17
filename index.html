@@ -11,7 +11,10 @@
     <script src="bower_components/jsfft/lib/fft.js"></script>
 </head>
 <body ng-controller="SixTuneCtrl">
-    <canvas id="myCanvas" width="200" height="100"></canvas>
+    <canvas id="myCanvas" width="1000" height="400"></canvas>
+    <ul>
+        <li ng-repeat="diff in closeststwo track by $index" ng-bind="closeststwo[$index]"></li>
+    </ul>
     <div>
         <h1>Tuner</h1>
         <div id="tuner">
