@@ -32,13 +32,20 @@
         <div id="endbar"></div>
         <div id="head"></div>
       </div>
-      <div id="results">Start by strumming your guitar!</div>
+      <div id="results">
+        Start by strumming your guitar!<br>
+        Tune red strings up,<br>
+        Tune blue strings down,<br>
+        White strings are tuned
+      </div>
 
     </div>
-    <canvas id="myCanvas" width="1000" height="400"></canvas>
-    <ul>
+    <canvas ng-show="showData == true" id="myCanvas" width="1000" height="400"></canvas>
+    <div id="dataList" ng-show="showData == true">
+      <ul>
         <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="diff.val | number:2"></li>
-    </ul>
+      </ul>
+    </div>
     <script src="js/main.js"></script>
 
 </body>

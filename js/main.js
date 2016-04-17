@@ -1,6 +1,7 @@
 var pgApp = angular.module('SixTune', ['ngAnimate']);
 
 pgApp.controller('SixTuneCtrl', function($scope) {
+    $scope.showData = false;
     $scope.inTune = false;
     $scope.idealFreqs = [82.407, 110, 146.83, 196, 246.94, 329.63];
     $scope.closests = [0, 0, 0, 0, 0, 0];
@@ -30,13 +31,7 @@ pgApp.controller('SixTuneCtrl', function($scope) {
     };
 
     $scope.testcolors = function() {
-      for (var i = 0; i < $scope.stringclasses.length; i++) {
-        if ($scope.stringclasses[i] !== 'overnote') {
-          $scope.stringclasses[i] = 'overnote';
-        } else {
-          $scope.stringclasses[i] = 'undernote';
-        }
-      }
+      if ($scope.showData == false) {$scope.showData = true;} else {$scope.showData = false;}
     }
 
     navigator.getUserMedia = (navigator.getUserMedia ||
