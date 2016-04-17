@@ -17,3 +17,8 @@
 .good {
     color: lawngreen;
 }
+
+body {
+  margin: 0 auto;
+  height:100%
+}

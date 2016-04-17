@@ -3,18 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Six-String Tuner</title>
+    <!--<link href='https://fonts.googleapis.com/css?family=Mrs+Sheppards' rel='stylesheet' type='text/css'>-->
+
     <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="./css/guitar.css">
 
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/jsfft/lib/complex_array.js"></script>
     <script src="bower_components/jsfft/lib/fft.js"></script>
 </head>
 <body ng-controller="SixTuneCtrl">
+    <div id="title">
+      <div id="titletext" ng-click="testcolors()">six tune</div>
+    </div>
+
+    <div id="guitar">
+      <div id="fretboard">
+        <div id="guitarbody"></div>
+        <div id="guitarbodyhold"></div>
+        <div ng-class="stringclasses[0]" id="sone"></div>
+        <div ng-class="stringclasses[1]" id="stwo"></div>
+        <div ng-class="stringclasses[2]" id="sthree"></div>
+        <div ng-class="stringclasses[3]" id="sfour"></div>
+        <div ng-class="stringclasses[4]" id="sfive"></div>
+        <div ng-class="stringclasses[5]" id="ssix"></div>
+        <div id="endbar"></div>
+        <div id="head"></div>
+      </div>
+
+    </div>
     <canvas id="myCanvas" width="1000" height="400"></canvas>
     <ul>
         <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="diff.val | number:2"></li>
     </ul>
     <script src="js/main.js"></script>
+
 </body>
+
 </html>

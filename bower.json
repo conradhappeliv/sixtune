@@ -18,6 +18,7 @@
   "dependencies": {
     "angular": "angularjs#^1.5.4",
     "jsfft": "https://github.com/dntj/jsfft.git",
-    "d3": "^3.5.16"
+    "d3": "^3.5.16",
+    "angular-animate": "~1.5.3"
   }
 }
