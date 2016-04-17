@@ -1,21 +1,26 @@
-var pgApp = angular.module('SixTune', []);
+var pgApp = angular.module('SixTune', ['ngAnimate']);
 
 pgApp.controller('SixTuneCtrl', function($scope) {
     $scope.inTune = false;
-    $scope.tuneDiffs = [
-        100,
-        102,
-        150,
-        70,
-        60,
-        40
-    ];
     $scope.idealFreqs = [82.407, 110, 146.83, 196, 246.94, 329.63];
     $scope.closeststwo = [0, 0, 0, 0, 0, 0];
+    $scope.closeststwotest = [0, 0, 0, 0, 0, 0];
+    $scope.stringclasses = ['onnote', 'onnote', 'onnote', 'onnote', 'onnote', 'onnote'];
+
     setInterval(function(){
         $scope.closeststwo = $scope.closests;
         $scope.$apply();
     }, 100);
+
+    $scope.testcolors = function() {
+      for (var i = 0; i < $scope.stringclasses.length; i++) {
+        if ($scope.stringclasses[i] !== 'overnote') {
+          $scope.stringclasses[i] = 'overnote';
+        } else {
+          $scope.stringclasses[i] = 'undernote';
+        }
+      }
+    }
 
     navigator.getUserMedia = (navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
@@ -24,14 +29,14 @@ pgApp.controller('SixTuneCtrl', function($scope) {
 
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     var analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 16384;
+    analyser.fftSize = 16384/2;
     analyser.smoothingTimeConstant = .8;
     var bufferLength = analyser.frequencyBinCount;
     var buffer = new Uint8Array(bufferLength);
     analyser.getByteFrequencyData(buffer);
 
     navigator.getUserMedia({audio: true}, function(stream) {
-        var source = audioCtx.createMediaStreamSource(stream);
+        window.source = audioCtx.createMediaStreamSource(stream);
         source.connect(analyser);
         source.connect(audioCtx.destination);
     }, function(){});
@@ -91,7 +96,6 @@ pgApp.controller('SixTuneCtrl', function($scope) {
 
             var weightedAvgFreq = 0;
             for(var i = 0; i < freqsToAdd.length; i++) weightedAvgFreq += freqsToAdd[i].val/sum * freqsToAdd[i].index;
-            console.log(peaks[peak], weightedAvgFreq)
 
             peakFreqs.push(weightedAvgFreq*44100/analyser.fftSize);
         }
@@ -149,6 +153,5 @@ function findClosest(findWhat, inWhat, bottom, top) {
     else {
         if(Math.abs(findWhat-inWhat[midIndex]) < Math.abs(findWhat-inWhat[midIndex+1])) return midIndex;
         return findClosest(findWhat, inWhat, midIndex+1, top);
-
     }
 }

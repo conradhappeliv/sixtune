@@ -1,0 +1,131 @@
+@font-face {
+    font-family: MrDafoe;
+    src: url(MrDafoe-Regular.ttf);
+    font-weight: normal;
+}
+
+#guitarbody {
+  position: absolute;
+  left:-1550px;
+  top:-220px;
+  width: 650px;
+  height: 600px;
+  background-color: sienna;
+  opacity: .95;
+  border-radius: 50%;
+}
+
+#guitarbodyhold {
+  position: absolute;
+  left:-1420px;
+  top:-40px;
+  height: 220px;
+  width: 220px;
+  border-radius: 50%;
+  background-color: black;
+  opacity: .4;
+}
+
+#titletext {
+  transform: rotate(-4deg);
+}
+
+#title {
+  background-color: orange;
+  text-align: center;
+  font-family: MrDafoe;
+  color: ghostwhite;
+  font-size: 11em;
+  padding-top: 100px;
+  margin-bottom: -60px;
+}
+
+#guitar {
+  transform: rotate(-4deg);
+  background-color: RoyalBlue;
+  min-width: 110%;
+  padding-top: 20px;
+  margin-left:-20px;
+  position: absolute;
+  height:80%;
+}
+
+#fretboard {
+  opacity: .85;
+  position: relative;
+  height: 140px;
+  width: 0px;
+  border-left: 1000px solid sienna;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+#endbar {
+  position: absolute;
+  width: 10px;
+  height:140px;
+  background-color: black;
+}
+
+#head {
+  position: absolute;
+  left: 10px;
+  top:-40px;
+  width:220px;
+  height:220px;
+  background-color: sienna;
+  border-bottom-left-radius: 20%;
+  border-top-left-radius: 20%;
+}
+
+#sone, #stwo, #sthree, #sfour, #sfive, #ssix {
+  position: absolute;
+  left: -1500px;
+  width: 1500px;
+  height: 6px;
+  margin-top: 4px;
+}
+
+#stwo {
+  margin-top: 28px;
+}
+
+#sthree {
+  margin-top: 52px;
+}
+
+#sfour {
+  margin-top: 75px;
+}
+
+#sfive {
+  margin-top: 100px;
+}
+
+#ssix {
+  margin-top: 125px;
+}
+
+.overnote,
+.overnote-add.overnote-add-active {
+  background-color: red;
+}
+
+.undernote,
+.undernote-add.undernote-add-active {
+  background-color: blue;
+}
+
+.onnote,
+.onnote-add.onnote-add-active {
+  background-color: white;
+}
+
+.overnote-add, .overnote-remove,
+.undernote-add, .undernote-remove,
+.onnote-add, .onnote-remove {
+  transition: background-color 1000ms linear;
+}

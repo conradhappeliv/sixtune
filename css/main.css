@@ -9,3 +9,8 @@
     display: inline-block;
     background-color: black;
 }
+
+body {
+  margin: 0 auto;
+  height:100%
+}
