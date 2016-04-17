@@ -10,12 +10,23 @@
     font-weight: light;
 }
 
+#guitarbodybigger {
+  position: absolute;
+  left:-2050px;
+  top:-270px;
+  width: 700px;
+  height: 720px;
+  background-color: sienna;
+  opacity: .95;
+  border-radius: 50%;
+}
+
 #guitarbody {
   position: absolute;
   left:-1550px;
-  top:-220px;
-  width: 650px;
-  height: 600px;
+  top:-240px;
+  width: 600px;
+  height: 650px;
   background-color: sienna;
   opacity: .95;
   border-radius: 50%;
@@ -43,7 +54,8 @@
   color: ghostwhite;
   font-size: 11em;
   padding-top: 100px;
-  margin-bottom: -5px;
+  padding-bottom: 80px;
+  margin-bottom: 0px;
 }
 
 #title a {
@@ -57,7 +69,7 @@
   min-width: 110%;
   margin-left:-20px;
   position: absolute;
-  margin-top: -55px;
+  margin-top: -135px;
   height:80%;
 }
 
@@ -85,7 +97,7 @@
   color:white;
   text-align: center;
   margin-top: 30px;
-  font-size: 1.6em;
+  font-size: 1.8em;
   font-family: Raleway;
   opacity: .8;
 }
@@ -99,12 +111,14 @@
   background-color: sienna;
   border-bottom-left-radius: 20%;
   border-top-left-radius: 20%;
+  border-top-right-radius: 3%;
+  border-bottom-right-radius: 3%;
 }
 
 #sone, #stwo, #sthree, #sfour, #sfive, #ssix {
   position: absolute;
-  left: -1500px;
-  width: 1500px;
+  left: -1700px;
+  width: 1700px;
   height: 6px;
   margin-top: 4px;
 }
