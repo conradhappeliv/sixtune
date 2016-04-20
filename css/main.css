@@ -2,18 +2,7 @@ html, body {
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-}
-
-#tuner {
-    height: 300px;
-}
-
-.tunebar {
-    margin-right: 2px;
-    height: 300px;
-    width: 30px;
-    display: inline-block;
-    background-color: black;
+  font-family: Raleway;
 }
 
 .bad {
@@ -34,6 +23,17 @@ li {
     list-style-type: none;
 }
 
+#help {
+    background-color: rgb(200, 200, 200);
+    padding: 10px;
+    position: fixed;
+    top:10px;
+    left: 10px;
+    z-index: 100;
+    border-radius: 10px;
+    color: black;
+}
+
 #myCanvas {
     position: fixed;
     bottom: 10px;
@@ -43,14 +43,14 @@ li {
 }
 
 #dataList {
-  position: fixed;
-  background-color: white;
-  bottom: 10px;
-  left: 10px;
-  z-index: 100;
-  border-radius: 10px;
-  width: 200px;
-  color: black;
+    background-color: rgb(200, 200, 200);
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 100;
+    border-radius: 10px;
+    width: 200px;
+    color: black;
 }
 
 .fade.ng-hide {

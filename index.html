@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Six-String Tuner</title>
-    <!--<link href='https://fonts.googleapis.com/css?family=Mrs+Sheppards' rel='stylesheet' type='text/css'>-->
 
     <link rel="stylesheet" type="text/css" href="./css/main.css">
     <link rel="stylesheet" type="text/css" href="./css/guitar.css">
@@ -35,18 +34,24 @@
       </div>
       <div id="results">
         Start by strumming your guitar!<br>
-        Tune red strings up,<br>
-        Tune blue strings down,<br>
+        Red strings are sharp,<br>
+        Blue strings are flat,<br>
         White strings are tuned
       </div>
 
     </div>
-    <canvas class="fade" ng-show="showData == true" id="myCanvas" width="1000" height="400"></canvas>
-    <div class="fade" id="dataList" ng-show="showData == true">
-      <ul>
-        <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="(diff.val | number:2) || '--'"></li>
-      </ul>
+
+    <div id="help" ng-show="showData">
+        <p>See source code at <a href="https://github.com/conradhappeliv/sixtune">https://github.com/conradhappeliv/sixtune</a></p>
+
     </div>
+    <canvas class="fade" id="myCanvas" width="1000" height="400" ng-show="showData"></canvas>
+    <div class="fade" id="dataList" ng-show="showData">
+        <ul>
+            <li ng-class="{true:'good', false:'bad'}[diff.good]" ng-repeat="diff in closeststwo" ng-bind="(diff.val | number:2) || '--'"></li>
+        </ul>
+    </div>
+
     <script src="js/main.js"></script>
 
 </body>

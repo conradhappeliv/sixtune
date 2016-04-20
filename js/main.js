@@ -1,22 +1,33 @@
 var pgApp = angular.module('SixTune', ['ngAnimate']);
 
 pgApp.controller('SixTuneCtrl', function($scope) {
+    // Constants
+    var numberToAverage = 20; // number of buffers to average over
+    var fftsize = 16384; // power of 2 from 32 to 32768 - big performance hit, but higher = more accurate
+    var smoothing = .4; // 0 to 1, 1 is "smoother"
+    var peakCutoff = 4/7; // At what amplitude below the peaks should the frequencies not be averaged in
+    var refreshTime = 40; // ms
+    // Frequency graph parameters
+    var canvasWidth = 1000;
+    var canvasHeight = 400;
+
     $scope.showData = false;
-    $scope.inTune = false;
-    $scope.idealFreqs = [82.407, 110, 146.83, 196, 246.94, 329.63];
+    $scope.idealFreqs = [82.407, 110, 146.83, 196, 246.94, 329.63]; // pitches to tune to
     $scope.closests = [0, 0, 0, 0, 0, 0];
     $scope.diffTimeData = [];
     $scope.closeststwo = [{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true},{val:0, good:true}];
     $scope.closeststwotest = [0, 0, 0, 0, 0, 0];
     $scope.stringclasses = ['onnote', 'onnote', 'onnote', 'onnote', 'onnote', 'onnote'];
 
+    // UI update
     setInterval(function(){
+        // use an average of the previous data sets to calculate the current one
         var curData = [];
         for(var i = 0; i < $scope.closests.length; i++) {
-            curData.push({val: $scope.closests[i], good: (Math.abs($scope.closests[i]) < .3)});
+            curData.push({val: $scope.closests[i], good: (Math.abs($scope.closests[i]) < .5)});
         }
         $scope.diffTimeData.push(curData);
-        if($scope.diffTimeData.length > 10) $scope.diffTimeData.shift();
+        if($scope.diffTimeData.length > numberToAverage) $scope.diffTimeData.shift();
 
 
         for(var stringNum = 0; stringNum < $scope.closeststwo.length; stringNum++) {
@@ -33,7 +44,7 @@ pgApp.controller('SixTuneCtrl', function($scope) {
         }
         $scope.updatecolors();
         $scope.$apply();
-    }, 40);
+    }, refreshTime);
 
     $scope.updatecolors = function () {
       for (var i = 0; i < $scope.stringclasses.length; i++) {
@@ -48,18 +59,18 @@ pgApp.controller('SixTuneCtrl', function($scope) {
     };
 
     $scope.testcolors = function() {
-      if ($scope.showData == false) {$scope.showData = true;} else {$scope.showData = false;}
-    }
+        $scope.showData = !$scope.showData;
+    };
 
     navigator.getUserMedia = (navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia);
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia);
 
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     var analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 16384*2;
-    analyser.smoothingTimeConstant = .8;
+    analyser.fftSize = fftsize;
+    analyser.smoothingTimeConstant = smoothing;
     var bufferLength = analyser.frequencyBinCount;
     var buffer = new Uint8Array(bufferLength);
     analyser.getByteFrequencyData(buffer);
@@ -67,17 +78,13 @@ pgApp.controller('SixTuneCtrl', function($scope) {
     navigator.getUserMedia({audio: true}, function(stream) {
         window.source = audioCtx.createMediaStreamSource(stream);
         window.source.connect(analyser);
-        window.source.connect(audioCtx.destination);
     }, function(){});
 
     var canvas = document.getElementById("myCanvas");
     var canvasCtx = canvas.getContext("2d");
-    var WIDTH = 1000;
-    var HEIGHT = 400;
 
+    // TODO: this method makes computers try to lift off?? Is is the drawing or the computation or?
     function draw() {
-        drawVisual = requestAnimationFrame(draw);
-
         analyser.getByteFrequencyData(buffer);
 
         // find peaks
@@ -113,10 +120,10 @@ pgApp.controller('SixTuneCtrl', function($scope) {
         var peakFreqs = [];
         for(peak in peaks) {
             var freqsToAdd = [];
-            for(var i = peaks[peak]; buffer[i] >= buffer[peaks[peak]]/2; i--) {
+            for(var i = peaks[peak]; buffer[i] >= buffer[peaks[peak]]*peakCutoff; i--) {
                 freqsToAdd.push({index: i, val: buffer[i]});
             }
-            for(var i = peaks[peak]+1; buffer[i] >= buffer[peaks[peak]]/2; i++) {
+            for(var i = peaks[peak]+1; buffer[i] >= buffer[peaks[peak]]*peakCutoff; i++) {
                 freqsToAdd.push({index: i, val: buffer[i]});
             }
 
@@ -133,15 +140,15 @@ pgApp.controller('SixTuneCtrl', function($scope) {
 
 
         canvasCtx.fillStyle = 'rgb(200, 200, 200)';
-        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+        canvasCtx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-        var barWidth = (WIDTH / bufferLength) * 2.5;
+        var barWidth = (canvasWidth / bufferLength) * 2.5;
         var barHeight;
         var x = 0;
 
         var closests = [];
         var closestsFreqs = [];
-        for(freq in $scope.idealFreqs) {
+        for(var freq = 0; freq < $scope.idealFreqs.length; freq++) {
             var ind = findClosest($scope.idealFreqs[freq], peakFreqs);
             closests.push(peaks[ind]);
             closestsFreqs.push(peakFreqs[ind] - $scope.idealFreqs[freq]);
@@ -152,7 +159,8 @@ pgApp.controller('SixTuneCtrl', function($scope) {
             else $scope.closests[i] = $scope.closests[i]*3/5 + closestsFreqs[i]*2/5;
         }
 
-        for(var i = 0; i < bufferLength; i++) {
+        // TODO: figure out what the magic 53 number comes from
+        for(var i = 0; i < bufferLength/53; i++) {
             barHeight = buffer[i]*3.125;
             if(closests.indexOf(i) >= 0) {
                 canvasCtx.fillStyle = 'rgb(255,0,0)';
@@ -160,15 +168,20 @@ pgApp.controller('SixTuneCtrl', function($scope) {
             else {
                 canvasCtx.fillStyle = 'rgb(0, 0, 0)';
             }
-            canvasCtx.fillRect(x, HEIGHT-barHeight/2 ,barWidth,barHeight/2);
-            barWidth = (WIDTH / bufferLength) * 2.5*14;
+            canvasCtx.fillRect(x, canvasHeight-barHeight/2, barWidth, barHeight/2);
+            barWidth = (canvasWidth / bufferLength) * 2.5*18;
             x += barWidth + 1;
         }
+        requestAnimationFrame(draw);
     }
 
-    draw();
+    requestAnimationFrame(draw);
 });
 
+/*
+Modified binary search that finds the index of the closest (or equal) value to findWhat in the inWhat array
+bottom and top parameters used for recursion (can be omitted)
+ */
 function findClosest(findWhat, inWhat, bottom, top) {
     if(inWhat.length < 8) return null;
     if(typeof bottom != "number") bottom = 0;
